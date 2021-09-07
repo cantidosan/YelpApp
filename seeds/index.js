@@ -6,9 +6,11 @@ const { places, descriptors } = require('./seedHelpers');
 
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
-    useNewUrlParser: true,
+    ///the commented body of code is deprecated
+
+    /*useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true */
 });
 
 const db = mongoose.connection;
@@ -24,14 +26,14 @@ const seedDB = async () => {
     await Campground.deleteMany({});
     for (let i = 0; i < 50; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
-        new Campground({
+        camp = new Campground({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`
         })
-        await campground.save();
+        await camp.save();
     }
 }
 
 seedDB().then(() => {
-    mongoose.connection.closr();
+    mongoose.connection.close();
 })
