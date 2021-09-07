@@ -5,11 +5,15 @@
     <h2>
         <%=campground.location %>
     </h2>
-    <a href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+    <img src="<%= campground.image %>" alt="">
     <p>
-    <form action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
-        <button> DELETE</button>
-    </form>
+        <%=campground.description %>
+            <p>
+                <a href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+            </p>
+            <form action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
+                <button> DELETE</button>
+            </form>
 
     </p>
     <footer>
