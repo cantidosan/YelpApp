@@ -4,6 +4,8 @@ const path = require('path');
 const ejsMate = require('ejs-mate');
 const app = express();
 app.engine('ejs', ejsMate)
+const Joi = require('joi');
+const { campgroundSchema } = require('./schema.js');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const mongoose = require('mongoose');
@@ -29,6 +31,18 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 
 
+const validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
+
+
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -45,7 +59,9 @@ app.get('/campgrounds/new', catchAsync(async (req, res) => {
 
 }))
 
-app.post('/campgrounds', catchAsync(async (req, res) => {
+app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
+    if (!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
+
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`)
@@ -62,7 +78,7 @@ app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
     res.render('campgrounds/edit', { campground });
 }))
 
-app.put('/campgrounds/:id', catchAsync(async (req, res) => {
+app.put('/campgrounds/:id', validateCampground, catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
     res.redirect(`/campgrounds/${campground._id}`)
@@ -74,11 +90,16 @@ app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     res.redirect('/campgrounds');
 }))
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
 
+})
 
 
 app.use((err, req, res, next) => {
-    res.send("OH NONO NOO!")
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oh,No Something went wrong!"
+    res.status(statusCode).render('errors', { err })
 
 })
 
