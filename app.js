@@ -30,8 +30,10 @@ const User = require('./models/user')
 
 
 //decoupled Rest routes?
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/users')
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
+
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     /*useNewUrlParser: true,
@@ -55,16 +57,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(session(sessionConfig))
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
-//authenitcate the user being created
-passport.use(new LocalStrategy(User.authenticate()));
-//how we store the user in the session
-passport.serializeUser(User.serializeUser());
-//how we get a user out of the session
-passport.deserializeUser(User.deserializeUser());
 
 
 ///cookie session details
@@ -81,6 +73,24 @@ const sessionConfig = {
 
 
 
+
+
+app.use(session(sessionConfig))
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+//authenitcate the user being created
+passport.use(new LocalStrategy(User.authenticate()));
+//how we store the user in the session
+passport.serializeUser(User.serializeUser());
+//how we get a user out of the session
+passport.deserializeUser(User.deserializeUser());
+
+
+
+
+
+
 //setup middleware for client side flash notifications
 
 
@@ -90,8 +100,10 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/campgrounds', campgrounds)
-app.use('/campgrounds/:id/reviews', reviews)
+
+app.use('/', userRoutes)
+app.use('/campgrounds', campgroundRoutes)
+app.use('/campgrounds/:id/reviews', reviewRoutes)
 
 
 app.get('/', (req, res) => {
