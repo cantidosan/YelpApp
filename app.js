@@ -23,6 +23,11 @@ const flash = require('connect-flash');
 //custom errorclass for error handling
 const ExpressError = require('./utils/ExpressError');
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+
+const User = require('./models/user')
+
 
 //decoupled Rest routes?
 const campgrounds = require('./routes/campgrounds');
@@ -50,6 +55,16 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(session(sessionConfig))
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+//authenitcate the user being created
+passport.use(new LocalStrategy(User.authenticate()));
+//how we store the user in the session
+passport.serializeUser(User.serializeUser());
+//how we get a user out of the session
+passport.deserializeUser(User.deserializeUser());
 
 
 ///cookie session details
@@ -64,10 +79,10 @@ const sessionConfig = {
     }
 }
 
-app.use(session(sessionConfig))
+
 
 //setup middleware for client side flash notifications
-app.use(flash());
+
 
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
