@@ -25,10 +25,10 @@ router.post('/register', catchAsync(async (req, res, next) => {
         req.flash('error', e.message);
         res.redirect('register');
     }
-
 }));
 
 router.get('/login', (req, res) => {
+
     res.render('users/login');
 })
 
@@ -42,7 +42,7 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     req.flash('success', 'welcome back');
     const redirectUrl = req.session.returnTo || '/campgrounds';
     delete req.session.returnTo;
-    res.redirect('/redirectUrl');
+    res.redirect(redirectUrl);
 
 })
 
