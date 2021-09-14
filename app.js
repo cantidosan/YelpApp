@@ -23,18 +23,20 @@ const flash = require('connect-flash');
 //custom errorclass for error handling
 const ExpressError = require('./utils/ExpressError');
 
+//built in library to handle User Auth
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
+//import user class from module
 const User = require('./models/user')
 
 
-//decoupled Rest routes?
+//segmented Rest routes?
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
-
+//establishes the connection to the DB
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     /*useNewUrlParser: true,
     useCreateIndex: true,
@@ -49,6 +51,7 @@ db.once("open", () => {
 });
 
 
+//establish file structure for site navigation
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
@@ -76,9 +79,13 @@ const sessionConfig = {
 
 
 app.use(session(sessionConfig))
+//allow flash function to be used for pop up notifications
 app.use(flash());
+
+//setup the auth process via passport
 app.use(passport.initialize());
 app.use(passport.session());
+
 //authenitcate the user being created
 passport.use(new LocalStrategy(User.authenticate()));
 //how we store the user in the session
@@ -92,9 +99,8 @@ passport.deserializeUser(User.deserializeUser());
 
 
 //setup middleware for client side flash notifications
-
-
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -111,6 +117,7 @@ app.get('/', (req, res) => {
 });
 
 
+//handles incorrect routes
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
 
