@@ -51,7 +51,8 @@ router.get('/:id', catchAsync(async (req, res) => {
 
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id)
+    const { id } = req.params
+    const campground = await Campground.findById(id)
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');

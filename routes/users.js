@@ -32,11 +32,7 @@ router.get('/login', (req, res) => {
     res.render('users/login');
 })
 
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success', "Logged Out!");
-    res.redirect('/campgrounds');
-})
+
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
     req.flash('success', 'welcome back');
@@ -44,6 +40,12 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 
+})
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success', "Logged Out!");
+    res.redirect('/campgrounds');
 })
 
 module.exports = router;
