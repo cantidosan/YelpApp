@@ -1,7 +1,7 @@
 const { campgroundSchema, reviewSchema } = require('./schema.js');
 const ExpressError = require('./utils/ExpressError');
 const Campground = require('./models/campground');
-
+const Review = require('./models/review');
 
 //manages login status of user
 module.exports.isLoggedIn = (req, res, next) => {

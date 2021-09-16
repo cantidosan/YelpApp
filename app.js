@@ -95,9 +95,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-
-
-
 //setup middleware for client side flash notifications
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
