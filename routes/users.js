@@ -5,6 +5,8 @@ const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user');
 const users = require('../controllers/users');
 
+
+///a way to group routes based on their addresses
 router.route('/register')
     .get(users.renderRegister)
     .post(catchAsync(users.register));

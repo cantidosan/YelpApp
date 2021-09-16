@@ -6,6 +6,8 @@ const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 
 const Campground = require('../models/campground');
 
+
+/// a way to group routes based on their  addresses
 router.route('/')
     .get(catchAsync(campgrounds.index))
     .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
