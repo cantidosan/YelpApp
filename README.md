@@ -19,18 +19,30 @@ web development knowhow
 
 ## Technologies
 Project is created with:
-* "node-sass": "6.0.1"
-*"autoprefixer": "^10.3.6",
- *   "concat": "^1.0.3",
-  *  "postcss": "^8.3.8",
-   * "postcss-cli": "^9.0.1",
-    *"sass": "^1.42.1"
-
+*   "@mapbox/mapbox-sdk": "^0.13.2",
+ *   "cloudinary": "^1.27.0",
+  *  "connect-flash": "^0.1.1",
+   * "dotenv": "^10.0.0",
+    *"ejs": "^3.1.6",
+*    "ejs-mate": "^3.0.0",
+ *   "express": "^4.17.1",
+  *  "express-session": "^1.17.2",
+   * "joi": "^17.4.2",
+*    "mapbox-geocoding": "^0.1.5",
+ *   "method-override": "^3.0.0",
+  *  "mongoose": "^6.0.4",
+   * "morgan": "^1.10.0",
+*    "multer": "^1.4.3",
+ *   "multer-storage-cloudinary": "^4.0.0",
+  *  "nodemon": "^2.0.12",
+   * "passport": "^0.4.1",
+    *"passport-local": "^1.0.0",
+  *  "passport-local-mongoose": "^6.1.0"
 
 ## Setup
 
 ```
-$ cd ../starter
+$ cd ../YelpApp
 $ npm install
 $ npm start
 ```
