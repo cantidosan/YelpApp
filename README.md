@@ -51,5 +51,6 @@ $ npm start
 <!-- ![link](https://github.com/cantidosan/Natours/blob/master/images/natours.JPG?raw=true) -->
 
 
+![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/82469261/168643943-5684952f-2cca-404a-a684-e16194f77bdd.gif)
 
-![natours demo gif](https://user-images.githubusercontent.com/82469261/168632708-3bd9f9be-26b7-45b6-9038-bc60e1264acf.gif)
+
