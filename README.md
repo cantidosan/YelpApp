@@ -39,6 +39,33 @@ Project is created with:
     *"passport-local": "^1.0.0",
   *  "passport-local-mongoose": "^6.1.0"
 
+
+
+
+
+
+![CLOUDINARY](https://user-images.githubusercontent.com/82469261/169051330-a72f4e9c-78bb-447f-9a68-0cf85fae04cd.png)
+
+
+
+
+
+![pngegg](https://user-images.githubusercontent.com/82469261/169051302-f8c3d6ab-4a47-4802-bf98-d9f979f314dc.png)
+
+
+
+
+
+
+
+
+![mongo](https://user-images.githubusercontent.com/82469261/169051312-993e8dd0-5c21-48d0-879c-be6038a9750b.png)
+
+
+
+
+
+
 ## Setup
 
 ```
